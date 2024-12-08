@@ -3,7 +3,9 @@ import { onMounted } from "vue";
 import { RouterView } from "vue-router";
 
 onMounted(() => {
-  console.log(Echo);
+  Echo.channel("posts").listen("PostCreated", (e) => {
+    console.log(e);
+  });
 });
 </script>
 
