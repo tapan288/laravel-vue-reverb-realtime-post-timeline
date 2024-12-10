@@ -1,3 +1,9 @@
+<script setup>
+import useAuth from "@/composables/useAuth";
+
+const { getName } = useAuth();
+</script>
+
 <template>
   <header class="bg-white">
     <nav
@@ -37,7 +43,7 @@
       <div class="hidden lg:flex">
         <div class="flex items-center space-x-6">
           <div class="text-sm font-semibold leading-6 text-gray-900">
-            User name
+            {{ getName }}
           </div>
           <button class="text-sm font-semibold leading-6 text-gray-900">
             Log out &rarr;
