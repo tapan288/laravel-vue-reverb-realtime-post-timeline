@@ -36,9 +36,13 @@ export default function useAuth() {
 
       setAuthenticated(true);
       setUser(response.data);
+
+      return response;
     } catch (error) {
       setAuthenticated(false);
       setUser({});
+
+      return Promise.reject(null);
     }
   };
 
