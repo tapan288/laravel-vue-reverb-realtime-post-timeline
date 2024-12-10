@@ -1,7 +1,7 @@
 <script setup>
 import useAuth from "@/composables/useAuth";
 
-const { getName } = useAuth();
+const { user, authenticated } = useAuth();
 </script>
 
 <template>
@@ -14,9 +14,13 @@ const { getName } = useAuth();
           <span class="text-xl font-bold"> Product Name </span>
         </a>
         <div class="hidden lg:flex lg:gap-x-12">
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+          <RouterLink
+            v-if="authenticated"
+            to="/dahboard"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >
             Dashboard
-          </a>
+          </RouterLink>
         </div>
       </div>
       <div class="flex lg:hidden">
@@ -43,16 +47,23 @@ const { getName } = useAuth();
       <div class="hidden lg:flex">
         <div class="flex items-center space-x-6">
           <div class="text-sm font-semibold leading-6 text-gray-900">
-            {{ getName }}
+            {{ user.name }}
           </div>
-          <button class="text-sm font-semibold leading-6 text-gray-900">
+          <button
+            v-if="authenticated"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >
             Log out &rarr;
           </button>
         </div>
         <div>
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+          <RouterLink
+            v-if="!authenticated"
+            to="/login"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >
             Log in &rarr;
-          </a>
+          </RouterLink>
         </div>
       </div>
     </nav>
