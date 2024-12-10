@@ -41,8 +41,6 @@ export default function useAuth() {
     } catch (error) {
       setAuthenticated(false);
       setUser({});
-
-      return Promise.reject(null);
     }
   };
 

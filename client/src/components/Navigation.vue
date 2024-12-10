@@ -16,7 +16,7 @@ const { user, authenticated } = useAuth();
         <div class="hidden lg:flex lg:gap-x-12">
           <RouterLink
             v-if="authenticated"
-            to="/dahboard"
+            to="/dashboard"
             class="text-sm font-semibold leading-6 text-gray-900"
           >
             Dashboard
@@ -46,7 +46,10 @@ const { user, authenticated } = useAuth();
       </div>
       <div class="hidden lg:flex">
         <div class="flex items-center space-x-6">
-          <div class="text-sm font-semibold leading-6 text-gray-900">
+          <div
+            v-if="authenticated"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >
             {{ user.name }}
           </div>
           <button
