@@ -1,5 +1,4 @@
 <script setup>
-import axios from "axios";
 import { reactive } from "vue";
 import useAuth from "@/composables/useAuth";
 
@@ -8,14 +7,10 @@ const form = reactive({
   password: "password",
 });
 
-const { setName } = useAuth();
+const { login: loginAction } = useAuth();
 
 const login = async () => {
-  setName("Some name");
-  //   await axios.get("/sanctum/csrf-cookie");
-  //   await axios.post("/login", form).then((response) => {
-  //     console.log(response);
-  //   });
+  loginAction(form);
 };
 </script>
 
