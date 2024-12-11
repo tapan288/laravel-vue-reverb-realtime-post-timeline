@@ -11,10 +11,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <Navigation />
-  <div class="py-6 lg:py-8">
-    <div class="mx-auto max-w-7xl px-6 lg-px-8">
+  <div class="min-h-screen bg-gray-100">
+    <Navigation />
+    <main>
       <RouterView />
-    </div>
+    </main>
   </div>
 </template>
