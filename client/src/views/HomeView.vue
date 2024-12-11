@@ -1,8 +1,6 @@
 <script setup>
 import Header from "@/components/Header.vue";
 import PostIndex from "@/components/PostIndex.vue";
-
-//
 </script>
 
 <template>
