@@ -17,6 +17,7 @@ defineProps({
         #{{ post.user.id }}
         <span class="text-slate-600">{{ post.user.name }}</span>
       </div>
+      <p>{{ post.id }}</p>
       <div>
         <p>{{ post.body }}</p>
       </div>
