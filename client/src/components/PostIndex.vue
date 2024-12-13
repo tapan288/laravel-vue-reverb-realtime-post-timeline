@@ -9,21 +9,18 @@ const target = ref(null);
 
 onMounted(async () => {
   await fetchPosts();
-
-  console.log(posts.value);
 });
 
 const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
   if (isIntersecting) {
     fetchNextPosts();
   }
-  // targetIsVisible.value = entry?.isIntersecting || false
 });
 </script>
 
 <template>
   <div class="space-y-8">
     <PostItem v-for="post in posts" :key="post.id" :post="post" />
-    <div ref="target"></div>
+    <div ref="target" class="-translate-y-20"></div>
   </div>
 </template>

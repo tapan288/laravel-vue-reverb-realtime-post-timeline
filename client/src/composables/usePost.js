@@ -5,11 +5,12 @@ export default function usePost() {
   const posts = ref([]);
   const page = ref(1);
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (pageNumber = 1) => {
     try {
-      let response = await axios.get("api/posts");
+      let response = await axios.get(`api/posts?page=${pageNumber}`);
 
-      posts.value = response.data.data;
+      posts.value = [...posts.value, ...response.data.data];
+      page.value = response.data.meta.current_page;
     } catch (error) {
       console.error(error);
     }
@@ -17,10 +18,7 @@ export default function usePost() {
 
   const fetchNextPosts = async (pageNumber = 2) => {
     try {
-      let response = await axios.get(`api/posts?page=${pageNumber}`);
-
-      posts.value = [...posts.value, ...response.data.data];
-      page.value = response.data.meta.current_page;
+      fetchPosts(page.value + 1);
     } catch (error) {
       console.log(error);
     }
