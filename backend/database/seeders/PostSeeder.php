@@ -18,7 +18,8 @@ class PostSeeder extends Seeder
             ->count(100)
             ->state(['user_id' => 1])
             ->state(new Sequence(fn($sequence) => [
-                'created_at' => now()->addDays($sequence->index),
+                'created_at' => now()->subYear()
+                    ->addDays($sequence->index),
             ]))
             ->create();
     }
