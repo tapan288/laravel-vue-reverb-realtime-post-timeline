@@ -4,6 +4,7 @@ import { ref } from "vue";
 export default function usePost() {
   const posts = ref([]);
   const page = ref(1);
+  const isLoaded = ref(false);
 
   const fetchPosts = async (pageNumber = 1) => {
     try {
@@ -11,6 +12,7 @@ export default function usePost() {
 
       posts.value = [...posts.value, ...response.data.data];
       page.value = response.data.meta.current_page;
+      isLoaded.value = true;
     } catch (error) {
       console.error(error);
     }
@@ -24,5 +26,5 @@ export default function usePost() {
     }
   };
 
-  return { posts, fetchPosts, fetchNextPosts, page };
+  return { posts, fetchPosts, fetchNextPosts, page, isLoaded };
 }
