@@ -10,7 +10,7 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
 
-    protected $fillable = ['body', 'likes'];
+    protected $fillable = ['body', 'likes', 'user_id'];
 
     protected $with = ['user'];
 

@@ -7,6 +7,7 @@ export const usePostStore = defineStore("counter", {
     page: 1,
     posts: [],
     isLoaded: false,
+    errors: {},
   }),
   actions: {
     async fetchPosts(pageNumber = 1) {
@@ -25,6 +26,19 @@ export const usePostStore = defineStore("counter", {
         this.fetchPosts(this.page + 1);
       } catch (error) {
         console.log(error);
+      }
+    },
+    async storePost(formData) {
+      try {
+        const response = await axios.post("api/posts", formData);
+
+        this.posts = [response.data, ...this.posts];
+
+        return response;
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors;
+        }
       }
     },
   },
