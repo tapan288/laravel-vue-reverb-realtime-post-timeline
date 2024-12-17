@@ -29,7 +29,11 @@ export const usePostStore = defineStore("counter", {
     },
     async storePost(formData) {
       try {
-        const response = await axios.post("api/posts", formData);
+        const response = await axios.post("api/posts", formData, {
+          headers: {
+            "X-Socket-Id": Echo.socketId(),
+          },
+        });
 
         this.pushPost(response.data.data);
 

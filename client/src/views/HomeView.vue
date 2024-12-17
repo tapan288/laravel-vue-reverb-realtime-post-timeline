@@ -9,6 +9,8 @@ const postsStore = usePostStore();
 const channel = Echo.channel("posts");
 
 channel.listen("PostCreated", (post) => {
+  console.log("PostCreated", post);
+
   postsStore.pushPost(post);
 });
 </script>
