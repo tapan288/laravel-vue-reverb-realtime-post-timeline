@@ -2,6 +2,15 @@
 import CreatePost from "@/components/CreatePost.vue";
 import Header from "@/components/Header.vue";
 import PostIndex from "@/components/PostIndex.vue";
+import { usePostStore } from "@/stores/usePostStore";
+
+const postsStore = usePostStore();
+
+const channel = Echo.channel("posts");
+
+channel.listen("PostCreated", (post) => {
+  postsStore.pushPost(post);
+});
 </script>
 
 <template>

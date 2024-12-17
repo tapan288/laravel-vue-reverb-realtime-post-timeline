@@ -2,14 +2,16 @@
 
 namespace App\Events;
 
+use App\Models\Post;
+use App\Http\Resources\PostResource;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
 class PostCreated implements ShouldBroadcastNow
 {
@@ -18,17 +20,14 @@ class PostCreated implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public int $postId)
     {
         //
     }
 
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
-        return [
-            'title' => 'This is a new post',
-            'body' => 'This is the body of the post',
-        ];
+        return PostResource::make(Post::find($this->postId))->toArray(request());
     }
 
     /**
