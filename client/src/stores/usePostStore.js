@@ -1,4 +1,3 @@
-// stores/counter.js
 import axios from "axios";
 import { defineStore } from "pinia";
 
@@ -32,7 +31,7 @@ export const usePostStore = defineStore("counter", {
       try {
         const response = await axios.post("api/posts", formData);
 
-        this.posts = [response.data, ...this.posts];
+        this.pushPost(response.data.data);
 
         return response;
       } catch (error) {
@@ -40,6 +39,13 @@ export const usePostStore = defineStore("counter", {
           this.errors = error.response.data.errors;
         }
       }
+    },
+    pushPost(post) {
+      if (this.posts.find((item) => item.id == post.id)) {
+        return;
+      }
+
+      this.posts = [post, ...this.posts];
     },
   },
 });
