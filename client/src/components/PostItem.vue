@@ -1,6 +1,8 @@
 <script setup>
 import useAuth from "@/composables/useAuth";
 import { usePostStore } from "@/stores/usePostStore";
+import { ref } from "vue";
+import EditPost from "./EditPost.vue";
 
 const props = defineProps({
   post: {
@@ -11,6 +13,7 @@ const props = defineProps({
 
 const postsStore = usePostStore();
 const { user } = useAuth();
+const editing = ref(false);
 
 const deletePost = () => {
   if (confirm("Are you sure you want to delete this post?")) {
@@ -30,14 +33,26 @@ const deletePost = () => {
         <span class="text-slate-600">{{ post.user.name }}</span>
       </div>
       <p>{{ post.id }}</p>
-      <div>
-        <p>{{ post.body }}</p>
-      </div>
-      <div class="flex items-center space-x-2">
-        <div v-if="user.id == post.user.id">
-          <button class="text-indigo-500" @click="deletePost">Delete</button>
+      <div v-show="!editing" class="space-y-4">
+        <div>
+          <p>{{ post.body }}</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div v-if="user.id == post.user.id">
+            <button class="text-indigo-500" @click="editing = true">
+              Edit
+            </button>
+          </div>
+          <div v-if="user.id == post.user.id">
+            <button class="text-indigo-500" @click="deletePost">Delete</button>
+          </div>
         </div>
       </div>
+      <EditPost
+        v-show="editing"
+        :post="post"
+        v-on:edit-cancel="editing = false"
+      />
     </div>
   </div>
 </template>
