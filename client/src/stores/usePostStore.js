@@ -45,6 +45,7 @@ export const usePostStore = defineStore("counter", {
       }
     },
     pushPost(post) {
+      this.posts.pop();
       if (this.posts.find((item) => item.id == post.id)) {
         return;
       }
