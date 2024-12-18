@@ -1,10 +1,22 @@
 <script setup>
-defineProps({
+import useAuth from "@/composables/useAuth";
+import { usePostStore } from "@/stores/usePostStore";
+
+const props = defineProps({
   post: {
     type: Object,
     required: true,
   },
 });
+
+const postsStore = usePostStore();
+const { user } = useAuth();
+
+const deletePost = () => {
+  if (confirm("Are you sure you want to delete this post?")) {
+    postsStore.deletePost(props.post.id);
+  }
+};
 </script>
 
 <template>
@@ -20,6 +32,11 @@ defineProps({
       <p>{{ post.id }}</p>
       <div>
         <p>{{ post.body }}</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div v-if="user.id == post.user.id">
+          <button class="text-indigo-500" @click="deletePost">Delete</button>
+        </div>
       </div>
     </div>
   </div>

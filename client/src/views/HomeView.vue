@@ -8,9 +8,15 @@ const postsStore = usePostStore();
 
 const channel = Echo.channel("posts");
 
-channel.listen("PostCreated", (post) => {
-  postsStore.pushPost(post);
-});
+channel
+  .listen("PostCreated", (post) => {
+    postsStore.pushPost(post);
+  })
+  .listen("PostDeleted", (payload) => {
+    console.log(payload);
+
+    postsStore.removePostFromStore(payload.postId);
+  });
 </script>
 
 <template>

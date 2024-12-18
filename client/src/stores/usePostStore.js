@@ -52,5 +52,18 @@ export const usePostStore = defineStore("counter", {
 
       this.posts = [post, ...this.posts];
     },
+
+    async deletePost(postId) {
+      try {
+        const response = await axios.delete(`api/posts/${postId}`);
+
+        this.removePostFromStore(postId);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    removePostFromStore(postId) {
+      this.posts = this.posts.filter((post) => post.id !== postId);
+    },
   },
 });

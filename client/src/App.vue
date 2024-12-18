@@ -4,9 +4,9 @@ import { RouterView } from "vue-router";
 import Navigation from "./components/Navigation.vue";
 
 onMounted(() => {
-  Echo.channel("posts").listen("PostCreated", (e) => {
-    console.log(e);
-  });
+  //   Echo.channel("posts").listen("PostCreated", (e) => {
+  //     console.log(e);
+  //   });
 });
 </script>
 
