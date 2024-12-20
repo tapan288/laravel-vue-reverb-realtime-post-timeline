@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PostUpdated;
 use App\Models\Post;
+use App\Events\PostLiked;
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
+use App\Events\PostUpdated;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePostRequest;
@@ -23,12 +24,13 @@ class PostController extends Controller
         return PostResource::collection($posts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function like(Post $post)
     {
-        //
+        $post->increment('likes');
+
+        broadcast(new PostLiked($post->id))->toOthers();
+
+        return PostResource::make($post);
     }
 
     /**

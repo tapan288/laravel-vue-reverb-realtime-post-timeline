@@ -10,4 +10,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::apiResource('posts', PostController::class);
+    Route::put('posts/{post}/like', [PostController::class, 'like']);
 });
