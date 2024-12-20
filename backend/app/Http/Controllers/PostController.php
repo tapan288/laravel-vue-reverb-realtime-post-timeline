@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostUpdated;
 use App\Models\Post;
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
@@ -69,6 +70,8 @@ class PostController extends Controller
         Gate::authorize('update', $post);
 
         $post->update($request->validated());
+
+        broadcast(new PostUpdated($post->id))->toOthers();
 
         return PostResource::make($post);
     }

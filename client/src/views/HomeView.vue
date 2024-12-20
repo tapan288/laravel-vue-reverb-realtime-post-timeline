@@ -12,6 +12,9 @@ channel
   .listen("PostCreated", (post) => {
     postsStore.pushPost(post);
   })
+  .listen("PostUpdated", (post) => {
+    postsStore.syncPost(post);
+  })
   .listen("PostDeleted", (payload) => {
     console.log(payload);
 
