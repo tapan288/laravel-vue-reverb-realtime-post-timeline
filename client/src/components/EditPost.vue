@@ -12,20 +12,23 @@ const props = defineProps({
 });
 
 const postsStore = usePostStore();
+const emit = defineEmits();
 
 const form = reactive({
   body: props.post.body,
 });
 
-const submit = async () => {
-  await postsStore.storePost(form).then(() => {
-    form.body = "";
-  });
+const updatePost = async () => {
+  const response = await postsStore.updatePost(props.post.id, form);
+
+  if (response.status == 200) {
+    emit("edit-cancel");
+  }
 };
 </script>
 
 <template>
-  <form class="space-y-2" @submit.prevent="submit">
+  <form class="space-y-2" @submit.prevent="updatePost">
     <div>
       <label for="body" class="sr-only">Post body</label>
       <TextArea

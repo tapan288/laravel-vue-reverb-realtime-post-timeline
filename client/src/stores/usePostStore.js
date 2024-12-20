@@ -44,6 +44,23 @@ export const usePostStore = defineStore("counter", {
         }
       }
     },
+    async updatePost(postId, formData) {
+      try {
+        const response = await axios.put(`api/posts/${postId}`, formData, {
+          headers: {
+            "X-Socket-Id": Echo.socketId(),
+          },
+        });
+
+        this.syncPost(response.data.data);
+
+        return response;
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors;
+        }
+      }
+    },
     pushPost(post) {
       this.posts.pop();
       if (this.posts.find((item) => item.id == post.id)) {
@@ -51,6 +68,9 @@ export const usePostStore = defineStore("counter", {
       }
 
       this.posts = [post, ...this.posts];
+    },
+    syncPost(post) {
+      this.posts.find((item) => item.id == post.id).body = post.body;
     },
 
     async deletePost(postId) {
