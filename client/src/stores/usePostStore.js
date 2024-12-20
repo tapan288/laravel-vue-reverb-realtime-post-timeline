@@ -6,7 +6,8 @@ export const usePostStore = defineStore("counter", {
     page: 1,
     posts: [],
     isLoaded: false,
-    errors: {},
+    createErrors: {},
+    updateErrors: {},
   }),
   actions: {
     async fetchPosts(pageNumber = 1) {
@@ -40,7 +41,7 @@ export const usePostStore = defineStore("counter", {
         return response;
       } catch (error) {
         if (error.response.status === 422) {
-          this.errors = error.response.data.errors;
+          this.createErrors = error.response.data.errors;
         }
       }
     },
@@ -57,7 +58,7 @@ export const usePostStore = defineStore("counter", {
         return response;
       } catch (error) {
         if (error.response.status === 422) {
-          this.errors = error.response.data.errors;
+          this.updateErrors = error.response.data.errors;
         }
       }
     },

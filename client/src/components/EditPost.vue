@@ -38,11 +38,11 @@ const updatePost = async () => {
         placeholder="What do you want to say?"
       />
       <p
-        v-if="postsStore.errors.body"
+        v-if="postsStore.updateErrors.body"
         class="mt-2 text-sm text-red-600"
         id="email-error"
       >
-        {{ postsStore.errors.body[0] }}
+        {{ postsStore.updateErrors.body[0] }}
       </p>
     </div>
     <div class="flex items-center space-x-2">
